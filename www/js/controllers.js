@@ -1,7 +1,10 @@
 angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
-.controller('homeCtrl', function($scope,$http,$log) {
+.controller('homeCtrl', function($scope,$http,$log,currentUser) {
   // $scope.pagecontent = 'Home';
+  $log.info('currentuser===',currentUser)
+  $scope.currentUser = currentUser
+  
   $http.get('http://yodelappbcjmm.herokuapp.com')
     .then(function(data){
       $log.info('fromt the get request',data.data)
@@ -31,6 +34,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     .then(function(data){
       console.log(data.data);
       localStorage.setItem('Token', data.data.token);
+      console.log('this is headed home but its not going')
       $state.go('tab.home')
     })
   }

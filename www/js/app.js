@@ -50,6 +50,37 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
+  // .when('/beers', {
+  //       templateUrl: '/templates/beers.html',
+  //       controller: 'BeersController',
+  //       requiresLogin: true,
+  //       resolve: {
+  //         currentUser: function ($http, $location) {
+  //
+  //           // if the browser has a token
+  //           if (localStorage.getItem('token')) {
+  //
+  //             // call /me endpoint, and pass it the token
+  //             const config = {
+  //               headers: {
+  //                 'authorization': 'Bearer ' + localStorage.getItem('token')
+  //               }
+  //             }
+  //
+  //             return $http.get('/api/v1/users/me', config)
+  //               .then(function (response) {
+  //                 return response.data
+  //               })
+  //               .catch(function () {
+  //                 localStorage.clear();
+  //                 $location.path('/')
+  //                 return null;
+  //               })
+  //
+  //           }
+  //         }
+  //       }
+  //     });
 
   .state('tab.home', {
     url: '/home',
@@ -57,6 +88,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
         controller: 'homeCtrl'
+      }
+    },
+    protected: true,
+    resolve: {
+      currentUser: function($http,$log,$state) {
+        if(localStorage.getItem('Token')) {
+          $log.info('checking for token....')
+          const config = {
+            headers: {
+              authorization: 'Bearer ' + localStorage.getItem('Token')
+            }
+          }
+          return $http.get('http://yodelappbcjmm.herokuapp.com/me',config)
+          .then(function(response) {
+            $log.info('from the resolve:',response)
+            $log.info(response.data)
+            return response.data
+            $state.go('tab.home')
+          })
+          .catch(function () {
+            $log.info('there was an error')
+            localStorage.clear();
+            $state.go('signin')
+            return null;
+          })
+        }
       }
     }
   })
