@@ -50,38 +50,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
-  // .when('/beers', {
-  //       templateUrl: '/templates/beers.html',
-  //       controller: 'BeersController',
-  //       requiresLogin: true,
-  //       resolve: {
-  //         currentUser: function ($http, $location) {
-  //
-  //           // if the browser has a token
-  //           if (localStorage.getItem('token')) {
-  //
-  //             // call /me endpoint, and pass it the token
-  //             const config = {
-  //               headers: {
-  //                 'authorization': 'Bearer ' + localStorage.getItem('token')
-  //               }
-  //             }
-  //
-  //             return $http.get('/api/v1/users/me', config)
-  //               .then(function (response) {
-  //                 return response.data
-  //               })
-  //               .catch(function () {
-  //                 localStorage.clear();
-  //                 $location.path('/')
-  //                 return null;
-  //               })
-  //
-  //           }
-  //         }
-  //       }
-  //     });
-
   .state('tab.home', {
     url: '/home',
     views: {
