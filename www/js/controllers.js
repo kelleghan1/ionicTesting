@@ -1,8 +1,8 @@
 angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
-.controller('homeCtrl', function($scope,$http,$log,currentUser,$rootScope) {
+.controller('homeCtrl', function($scope,$http,$log,currentUser) {
   // $scope.pagecontent = 'Home';
-  $log.info('currentuser===',currentUser)
+  $log.info('currentuser===', currentUser)
   $scope.currentUser = currentUser
 
   $http.get('http://yodelappbcjmm.herokuapp.com')
@@ -40,9 +40,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('locationCtrl', function($scope, $http, $cordovaGeolocation,$log, currentUser) {
+
   $scope.test = 'test'
   $log.info('currentuserslocation....',currentUser);
-  // $scope.username = currentUser.username 
+  // $scope.username = currentUser.username
   $scope.takeLocation = function() {
 
     var posOptions = {
@@ -53,6 +54,13 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     .getCurrentPosition(posOptions)
     .then(function (position) {
       $scope.newLocation = {};
+      // $scope.newLocation.toggleActive = function () {
+      //   return $scope.newLocation.active = !$scope.newLation.active
+      // }
+      $scope.newLocation.active = true;
+      $scope.newLocation.toggle = function(){
+        return  $scope.newLocation.active = !$scope.newLocation.active;
+      }
       $scope.newLocation.username = currentUser.name
       $scope.newLocation.long = position.coords.longitude;
       $scope.newLocation.lat = position.coords.latitude;
@@ -72,7 +80,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('chatCtrl', function($scope, $http) {
-  $scope.chat = Chats.get($stateParams.chatId);
+  // $scope.chat = Chats.get($stateParams.chatId);
+  $scope.test = 'test: am i here?',
+  $scope.origin
 })
 
 .controller('cameraCtrl', function($scope, $cordovaCamera, $state) {
