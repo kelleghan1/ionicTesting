@@ -3,7 +3,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 .controller('homeCtrl', function($scope,$http,$log,currentUser,$rootScope) {
   // $scope.pagecontent = 'Home';
   $log.info('currentuser===',currentUser)
-  $rootScope.currentUser = currentUser
+  $scope.currentUser = currentUser
 
   $http.get('http://yodelappbcjmm.herokuapp.com')
   .then(function(data){
@@ -12,8 +12,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   })
 
 })
-
-
 .controller('logInCtrl', function($scope, $state, $http, $log) {
   $scope.user = {}
   var userData = $scope.user
@@ -22,11 +20,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     $http.post('http://yodelappbcjmm.herokuapp.com/login',userData)
     .then(function(data) {
       $log.info(data);
+      localStorage.setItem('Token', data.data.token);
       $state.go('tab.home')
     })
   }
 })
-
 .controller('signUpCtrl', function($scope, $state, $http, $log) {
   $scope.user = {}
   $scope.signUp = function() {
