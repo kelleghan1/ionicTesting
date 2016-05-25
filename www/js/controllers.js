@@ -1,10 +1,10 @@
 angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
-.controller('homeCtrl', function($scope,$http,$log,currentUser) {
+.controller('homeCtrl', function($scope,$http,$log,currentUser,$rootScope) {
   // $scope.pagecontent = 'Home';
   $log.info('currentuser===',currentUser)
-  $scope.currentUser = currentUser
-  
+  $rootScope.currentUser = currentUser
+
   $http.get('http://yodelappbcjmm.herokuapp.com')
   .then(function(data){
     $log.info('fromt the get request',data.data)
@@ -14,16 +14,17 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 
-.controller('signInCtrl', function($scope, $state, $http, $log) {
+.controller('logInCtrl', function($scope, $state, $http, $log) {
   $scope.user = {}
   var userData = $scope.user
   $scope.login = function() {
-    $http.get('http://yodelappbcjmm.herokuapp.com/newlocation',userData)
-    .then(function(data){
+    $log.info('login fired!')
+    $http.post('http://yodelappbcjmm.herokuapp.com/login',userData)
+    .then(function(data) {
+      $log.info(data);
       $state.go('tab.home')
     })
   }
-
 })
 
 .controller('signUpCtrl', function($scope, $state, $http, $log) {
@@ -73,9 +74,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-
-
-.controller('cameraCtrl', function($scope, $cordovaCamera) {
+.controller('cameraCtrl', function($scope, $cordovaCamera, $state) {
   $scope.pictureUrl = "http://placehold.it/300/300";
 
   $scope.takePicture = function() {
@@ -97,4 +96,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     });
 
   };
+  $scope.logout = function() {
+    console.log('logout fired!')
+    localStorage.clear();
+    $state.go('login')
+  }
 });
