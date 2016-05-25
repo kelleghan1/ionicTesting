@@ -39,8 +39,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   }
 })
 
-.controller('locationCtrl', function($scope, $http, $cordovaGeolocation) {
-
+.controller('locationCtrl', function($scope, $http, $cordovaGeolocation,$log, currentUser) {
+  $scope.test = 'test'
+  $log.info('currentuserslocation....',currentUser);
+  // $scope.username = currentUser.username 
   $scope.takeLocation = function() {
 
     var posOptions = {
@@ -51,6 +53,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     .getCurrentPosition(posOptions)
     .then(function (position) {
       $scope.newLocation = {};
+      $scope.newLocation.username = currentUser.name
       $scope.newLocation.long = position.coords.longitude;
       $scope.newLocation.lat = position.coords.latitude;
       var newLocation = $scope.newLocation;
